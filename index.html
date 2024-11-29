@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Cat Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    #cat-container {
+      margin: 20px auto;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    button {
+      background-color: #f76c6c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #f54d4d;
+    }
+    #cat-fact {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Cat Generator</h1>
+  <div id="cat-container">
+    <img id="cat-image" src="https://cataas.com/cat" alt="Random Cat">
+  </div>
+  <button onclick="generateCatAndFact()">meow</button>
+  <p id="cat-fact">:3</p>
+
+  <script>
+    async function generateCatAndFact() {
+      try {
+        // Generate a new random cat image
+        const catImage = document.getElementById("cat-image");
+        catImage.src = "https://cataas.com/cat?time=" + new Date().getTime(); // Prevent caching
+
+        // Fetch a new random cat fact
+        const factResponse = await fetch("https://catfact.ninja/fact");
+        const factData = await factResponse.json();
+        const catFact = document.getElementById("cat-fact");
+        catFact.textContent = factData.fact;
+      } catch (error) {
+        console.error("Error generating cat or fact:", error);
+      }
+    }
+  </script>
+</body>
+</html>
